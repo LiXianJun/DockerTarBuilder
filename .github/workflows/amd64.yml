@@ -9,7 +9,7 @@ on:
 
 jobs:
   pull_and_package:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04-minimal
     steps:
     - name: Before freeing up disk space
       run: |
@@ -23,7 +23,6 @@ jobs:
           sudo journalctl --vacuum-size=100M
           sudo rm /var/log/*.gz
           sudo rm -rf /tmp/*
-          sudo rm -rf /var/tmp/*
           sudo apt-get clean
           sudo apt-get autoremove --purge
 
