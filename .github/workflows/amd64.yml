@@ -9,7 +9,7 @@ on:
 
 jobs:
   pull_and_package:
-    runs-on: ubuntu-latest
+    runs-on: python:3.10.11-slim-buster
     steps:
     - name: Before freeing up disk space
       run: |
