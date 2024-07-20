@@ -15,7 +15,7 @@ jobs:
       run: |
         echo "Before freeing up disk space"
         echo "=============================================================================="
-        df -hT
+        df -Th  /var/lib/docker
         echo "=============================================================================="
     
     - name: clean disk space
@@ -27,26 +27,26 @@ jobs:
           sudo apt-get autoremove --purge
 
     # 增加可用磁盘空间
-  #   - name: Maximize build space
-   #    uses: easimon/maximize-build-space@master
-  #     with:
+    - name: Maximize build space
+      uses: easimon/maximize-build-space@master
+      with:
 
-   #      root-reserve-mb: 2048
-  #       swap-size-mb: 128
-   #      remove-dotnet: 'true'
-  #       remove-haskell: 'true'
+       root-reserve-mb: 2048
+       swap-size-mb: 128
+       remove-dotnet: 'true'
+       remove-haskell: 'true'
         # 如果空间还是不够用，可以把以下开启，清理出更多空间
- #        remove-android: 'true'
- #        remove-codeql: 'true'
- #        build-mount-path: '/var/lib/docker/'
+       remove-android: 'true'
+       remove-codeql: 'true'
+       build-mount-path: '/var/lib/docker/'
 
-   #  - name: Restart docker
-  #     run: sudo service docker restart
+    - name: Restart docker
+      run: sudo service docker restart
     - name: Free up disk space complete
       run: |
         echo "Free up disk space complete"
         echo "=============================================================================="
-        df -hT
+        df -Th  /var/lib/docker
         echo "=============================================================================="
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -54,9 +54,9 @@ jobs:
     - name: Clean up Docker to free space
       run: |
           docker system prune -a -f
-          docker volume prune -f
-          docker image prune -f
-          docker container prune -f
+          docker volume prune -a -f
+          docker image prune -a -f
+          docker container prune -a -f
           rm -f *-amd64.tar
     - name: Pull Docker Images and Package
       run: |
