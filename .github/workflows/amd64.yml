@@ -40,8 +40,7 @@ jobs:
        remove-codeql: 'true'
        build-mount-path: '/var/lib/docker/'
 
-    - name: Restart docker
-      run: sudo service docker restart
+ 
     - name: Free up disk space complete
       run: |
         echo "Free up disk space complete"
@@ -58,6 +57,15 @@ jobs:
           docker image prune -a -f
           docker container prune -a -f
           rm -f *-amd64.tar
+    
+    - name: Restart docker
+      run: sudo service docker restart  
+    - name: Before freeing up disk space
+      run: |
+        echo "Before freeing up disk space"
+        echo "=============================================================================="
+        df -Th  /var/lib/docker
+        echo "=============================================================================="
     - name: Pull Docker Images and Package
       run: |
         images="${{ github.event.inputs.docker_images }}"
