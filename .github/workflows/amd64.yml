@@ -11,6 +11,9 @@ jobs:
   pull_and_package:
     runs-on: ubuntu-latest
     steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
     - name: Before freeing up disk space
       run: |
         echo "Before freeing up disk space"
@@ -55,7 +58,7 @@ jobs:
           docker system prune -a -f
           docker volume prune -a -f
           docker image prune -a -f
-          docker container prune -a -f
+          docker container prune -f
           rm -f *-amd64.tar
     
     - name: Restart docker
